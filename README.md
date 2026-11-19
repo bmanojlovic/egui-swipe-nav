@@ -11,6 +11,16 @@ apps, the way browsers do it.
 - It only collects scroll that the UI left unused. A row that scrolls sideways scrolls
   first, and navigation happens only past its end.
 
+## Demo
+
+```sh
+cargo run --example demo
+```
+
+Open a few pages, then swipe with two fingers. The row of cards scrolls sideways
+first and navigates past its ends; the list below scrolls up and down and never
+navigates.
+
 ## Use
 
 Call `update` once per frame, **after** the frame's UI, so scroll areas get the scroll

@@ -14,3 +14,8 @@ egui = { version = "0.37", default-features = false }
 
 [dev-dependencies]
 egui = { version = "0.37", default-features = false, features = ["default_fonts"] }
+
+[dev-dependencies.eframe]
+version = "0.37"
+default-features = false
+features = ["default_fonts", "glow", "wayland", "x11"]
