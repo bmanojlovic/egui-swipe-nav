@@ -1,0 +1,16 @@
+[package]
+name = "egui-swipe-nav"
+description = "Two-finger touchpad swipe for back and forward in egui apps, as browsers do it"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/bmanojlovic/egui-swipe-nav"
+keywords = ["egui", "gesture", "touchpad", "swipe", "navigation"]
+categories = ["gui"]
+publish = false
+
+[dependencies]
+egui = { version = "0.37", default-features = false }
+
+[dev-dependencies]
+egui = { version = "0.37", default-features = false, features = ["default_fonts"] }
