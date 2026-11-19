@@ -40,6 +40,23 @@ pub enum Direction {
     Forward,
 }
 
+/// A snapshot of the swipe under way, see [`SwipeNav::gesture`].
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct GestureInfo {
+    /// Horizontal scroll nothing else used, in points; positive is back.
+    /// The swipe counts when this reaches [`SwipeNav::threshold`].
+    pub leftover: f32,
+    /// Everything the fingers moved, used by the UI or not.
+    pub moved: Vec2,
+    /// The fingers are still on the pad (as far as the platform reports).
+    pub fingers_down: bool,
+    /// The platform reports gesture phases, so lifting the fingers ends it.
+    pub phased: bool,
+    /// Where it would go if it ended now: `None` when it is too vertical or
+    /// heads somewhere not possible.
+    pub direction: Option<Direction>,
+}
+
 /// Recognizes the swipe across frames. Keep one per window.
 #[derive(Clone, Debug)]
 pub struct SwipeNav {
@@ -118,6 +135,19 @@ impl SwipeNav {
         let gesture = self.gesture?;
         let direction = self.direction(gesture)?;
         Some((direction, (gesture.leftover.abs() / self.threshold).min(1.0)))
+    }
+
+    /// What the swipe under way has collected so far, for showing it while
+    /// tuning or debugging. `None` while there is no swipe.
+    pub fn gesture(&self) -> Option<GestureInfo> {
+        let gesture = self.gesture?;
+        Some(GestureInfo {
+            leftover: gesture.leftover,
+            moved: gesture.moved,
+            fingers_down: !gesture.fingers_lifted,
+            phased: gesture.phased,
+            direction: self.direction(gesture),
+        })
     }
 
     /// Draws the arrow at the left (back) or right (forward) edge of `area`
